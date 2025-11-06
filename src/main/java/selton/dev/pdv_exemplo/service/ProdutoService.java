@@ -2,8 +2,8 @@ package selton.dev.pdv_exemplo.service;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import selton.dev.pdv_exemplo.exception.custom.EntityNotFoundException;
 import selton.dev.pdv_exemplo.model.Produto;
 import selton.dev.pdv_exemplo.repository.ProdutoRepository;
 
@@ -19,7 +19,7 @@ public class ProdutoService {
 
     public Produto buscarPorId(Long id) {
         return produtoRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado."));
+            .orElseThrow(() -> new EntityNotFoundException("Produto"));
     }
 
     public void deletar(Produto produto) {
