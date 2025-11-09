@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import selton.dev.pdv_exemplo.dto.ClienteDTO;
 import selton.dev.pdv_exemplo.dto.PDVRequest;
 import selton.dev.pdv_exemplo.dto.PDVResponse;
+import selton.dev.pdv_exemplo.dto.ProdutoDTO;
 import selton.dev.pdv_exemplo.model.Produto;
 import selton.dev.pdv_exemplo.service.ClienteService;
 import selton.dev.pdv_exemplo.service.PDVService;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -48,14 +51,19 @@ public class PDVController {
     }
 
     @PostMapping("/produtos")
-    public ResponseEntity<Void> criarProduto(@RequestBody Produto produto) {
-        produtoService.salvar(produto);
+    public ResponseEntity<Void> criarProduto(@RequestBody ProdutoDTO dto) {
+        produtoService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     
     @GetMapping("/produtos/{id}")
     public ResponseEntity<Produto> buscarProduto(@PathVariable Long id) {
         return ResponseEntity.ok().body(produtoService.buscarPorId(id));
+    }
+
+    @PutMapping("/produtos/{id}")
+    public ResponseEntity<Produto> editarProduto(@PathVariable Long id, @RequestBody ProdutoDTO dto) {
+        return ResponseEntity.ok().body(produtoService.editarPorId(id, dto));
     }
 
     @DeleteMapping("/produtos/{id}")
